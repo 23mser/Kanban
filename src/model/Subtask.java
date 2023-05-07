@@ -1,10 +1,13 @@
+package model;
+
 import java.util.Objects;
 
 public class Subtask extends Task {
-    public Epic epic;
-    public Subtask(Epic epic, String name, String description) {
+    public int epicId;
+
+    public Subtask(int epicId, String name, String description) {
         super(name, description);
-        this.epic = epic;
+        this.epicId = epicId;
     }
 
     @Override
@@ -15,8 +18,9 @@ public class Subtask extends Task {
         return Objects.equals(name, subtask.name) &&
                 Objects.equals(description, subtask.description) &&
                 Objects.equals(status, subtask.status) &&
-                Objects.equals(epic, subtask.epic);
+                Objects.equals(epicId, subtask.epicId);
     }
+
     @Override
     public int hashCode() {
         int hash = 17;
