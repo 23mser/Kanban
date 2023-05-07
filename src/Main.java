@@ -1,3 +1,8 @@
+import model.Epic;
+import model.Subtask;
+import model.Task;
+import service.Manager;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -11,27 +16,33 @@ public class Main {
         Epic epic1 = new Epic("сделать ТЗ № 3", "реализовать менеджер задач");
         manager.createNewEpic(epic1);
 
-        Subtask epic1Subtask1 = new Subtask(epic1,"написать код", "реализовать логику работы программы");
+        Subtask epic1Subtask1 = new Subtask(3, "написать код", "реализовать логику работы программы");
         manager.createNewSubtask(epic1, epic1Subtask1);
 
-        Subtask epic1Subtask2 = new Subtask(epic1,"проверить ошибки", "добавить задачи и исправить оишбки");
+        Subtask epic1Subtask2 = new Subtask(3, "проверить ошибки", "добавить задачи и исправить оишбки");
         manager.createNewSubtask(epic1, epic1Subtask2);
 
-        Epic epic2 = new Epic("Отправить на проверку", "если работа готова");
+        Epic epic2 = new Epic("отправить на проверку", "если работа готова");
         manager.createNewEpic(epic2);
 
-        Subtask epic2Subtask1 = new Subtask(epic2,"Загрузить на GitHub", "загрузить через bash");
+        Subtask epic2Subtask1 = new Subtask(6, "загрузить на GitHub", "загрузить через bash");
         manager.createNewSubtask(epic2, epic2Subtask1);
 
-        manager.printArrayOfTasks();
-        manager.findTask(3);
-        manager.updateTask(task2, "IN_PROGRESS");
-        manager.updateSubtask(epic1Subtask1, "DONE");
-        manager.updateSubtask(epic2Subtask1, "IN_PROGRESS");
+        manager.getList();
+        manager.getAllTasks();
+        manager.getAllEpics();
+        manager.getAllSubtasks();
+        manager.getTaskById(2);
+        manager.getEpicById(6);
+        manager.getSubtaskById(4);
+        manager.updateTask(task1);
+        manager.updateEpic(epic2);
+        manager.updateSubtask(epic1Subtask2);
         manager.getSubtasksOfEpic(epic1);
         manager.deleteById(4);
-        manager.printArrayOfTasks();
         manager.deleteAllTasks();
-        manager.printArrayOfTasks();
+        manager.deleteAllEpics();
+        manager.deleteAllSubtasks();
+        manager.deleteAll();
     }
 }
