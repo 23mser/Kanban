@@ -1,10 +1,19 @@
+package model;
+
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Epic extends Task {
+    protected ArrayList<Integer> subtaskIds = new ArrayList<>();
 
     public Epic(String name, String description) {
         super(name, description);
     }
+
+    public void addSubtaskId(Subtask subtask) {
+        subtaskIds.add(subtask.getId());
+    }
+
     @Override
     public int getId() {
         return id;
@@ -34,6 +43,7 @@ public class Epic extends Task {
                 Objects.equals(description, epic.description) &&
                 Objects.equals(status, epic.status);
     }
+
     @Override
     public int hashCode() {
         int hash = 17;
