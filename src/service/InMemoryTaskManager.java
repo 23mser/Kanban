@@ -15,6 +15,7 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, ArrayList<Subtask>> subtasksInEpic = new HashMap<>();
     private final ArrayList<Subtask> subtaskArrayList = new ArrayList<>();
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+
     public int id = 1;
 
     public int getId() {
@@ -23,14 +24,14 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createNewTask(Task task) {
-        task.setStatus("NEW");
+        task.setStatus(Status.NEW);
         task.setId(getId());
         tasks.put(task.getId(), task);
     }
 
     @Override
     public void createNewEpic(Epic epic) {
-        epic.setStatus("NEW");
+        epic.setStatus(Status.NEW);
         epic.setId(getId());
         epics.put(epic.getId(), epic);
         subtasksInEpic.put(epic.getId(), new ArrayList<>());
@@ -39,7 +40,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void createNewSubtask(Epic epic, Subtask subtask) {
         int epicId = epic.getId();
-        subtask.setStatus("NEW");
+        subtask.setStatus(Status.NEW);
         subtask.setId(getId());
         subtasks.put(subtask.getId(), subtask);
         subtaskArrayList.add(subtask);
@@ -194,24 +195,24 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpicStatus(Epic epic) {
-        String epicStatus = "NEW";
+        Status epicStatus = Status.NEW;
         for (Integer subtaskId : subtasks.keySet()) {
             Subtask currentSubtask = subtasks.get(subtaskId);
-            if (currentSubtask.getStatus().equals("DONE")) {
+            if (currentSubtask.getStatus().equals(Status.DONE)) {
                 epicStatus = currentSubtask.getStatus();
             } else {
-                epicStatus = "IN_PROGRESS";
+                epicStatus = Status.IN_PROGRESS;
                 break;
             }
         }
-        if (subtasks.isEmpty() || epicStatus.equals("NEW")) {
-            epic.setStatus("NEW");
+        if (subtasks.isEmpty() || epicStatus == Status.NEW) {
+            epic.setStatus(Status.NEW);
             System.out.println("Статус эпика " + epic.getName() + " - " + epic.getStatus());
-        } else if (epicStatus.equals("DONE")) {
-            epic.setStatus("DONE");
+        } else if (epicStatus.equals(Status.DONE)) {
+            epic.setStatus(Status.DONE);
             System.out.println("Статус эпика " + epic.getName() + " - " + epic.getStatus());
         } else {
-            epic.setStatus("IN_PROGRESS");
+            epic.setStatus(Status.IN_PROGRESS);
             System.out.println("Статус эпика " + epic.getName() + " - " + epic.getStatus());
         }
     }
