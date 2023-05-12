@@ -2,12 +2,12 @@ package service;
 
 import model.Task;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    private final List<Task> taskHistory = new ArrayList<>();
+    private final List<Task> taskHistory = new LinkedList<>();
 
     @Override
     public void add(Task task) {
@@ -20,10 +20,7 @@ public class InMemoryHistoryManager implements HistoryManager {
     }
 
     @Override
-    public void getHistory() {
-        System.out.println("Просмотренные задачи:");
-        for (Task task : taskHistory) {
-            System.out.println(task.getName());
-        }
+    public List<Task> getHistory() {
+        return taskHistory;
     }
 }
