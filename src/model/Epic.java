@@ -1,7 +1,5 @@
 package model;
 
-import service.Status;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -27,12 +25,12 @@ public class Epic extends Task {
     }
 
     @Override
-    public Status getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
     @Override
-    public void setStatus(Status status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 

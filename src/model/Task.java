@@ -1,14 +1,12 @@
 package model;
 
-import service.Status;
-
 import java.util.Objects;
 
 public class Task {
     public int id;
     public String name;
     public String description;
-    public Status status;
+    public TaskStatus status;
 
     public Task(String name, String description) {
         this.name = name;
@@ -47,11 +45,11 @@ public class Task {
         return name;
     }
 
-    public Status getStatus() {
+    public TaskStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(TaskStatus status) {
         this.status = status;
     }
 

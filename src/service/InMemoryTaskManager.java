@@ -3,6 +3,7 @@ package service;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import model.TaskStatus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,14 +25,14 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void createNewTask(Task task) {
-        task.setStatus(Status.NEW);
+        task.setStatus(TaskStatus.NEW);
         task.setId(getId());
         tasks.put(task.getId(), task);
     }
 
     @Override
     public void createNewEpic(Epic epic) {
-        epic.setStatus(Status.NEW);
+        epic.setStatus(TaskStatus.NEW);
         epic.setId(getId());
         epics.put(epic.getId(), epic);
         subtasksInEpic.put(epic.getId(), new ArrayList<>());
@@ -40,7 +41,7 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public void createNewSubtask(Epic epic, Subtask subtask) {
         int epicId = epic.getId();
-        subtask.setStatus(Status.NEW);
+        subtask.setStatus(TaskStatus.NEW);
         subtask.setId(getId());
         subtasks.put(subtask.getId(), subtask);
         subtaskArrayList.add(subtask);
@@ -195,24 +196,24 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateEpicStatus(Epic epic) {
-        Status epicStatus = Status.NEW;
+        TaskStatus epicStatus = TaskStatus.NEW;
         for (Integer subtaskId : subtasks.keySet()) {
             Subtask currentSubtask = subtasks.get(subtaskId);
-            if (currentSubtask.getStatus().equals(Status.DONE)) {
+            if (currentSubtask.getStatus().equals(TaskStatus.DONE)) {
                 epicStatus = currentSubtask.getStatus();
             } else {
-                epicStatus = Status.IN_PROGRESS;
+                epicStatus = TaskStatus.IN_PROGRESS;
                 break;
             }
         }
-        if (subtasks.isEmpty() || epicStatus == Status.NEW) {
-            epic.setStatus(Status.NEW);
+        if (subtasks.isEmpty() || epicStatus == TaskStatus.NEW) {
+            epic.setStatus(TaskStatus.NEW);
             System.out.println("Статус эпика " + epic.getName() + " - " + epic.getStatus());
-        } else if (epicStatus.equals(Status.DONE)) {
-            epic.setStatus(Status.DONE);
+        } else if (epicStatus.equals(TaskStatus.DONE)) {
+            epic.setStatus(TaskStatus.DONE);
             System.out.println("Статус эпика " + epic.getName() + " - " + epic.getStatus());
         } else {
-            epic.setStatus(Status.IN_PROGRESS);
+            epic.setStatus(TaskStatus.IN_PROGRESS);
             System.out.println("Статус эпика " + epic.getName() + " - " + epic.getStatus());
         }
     }
