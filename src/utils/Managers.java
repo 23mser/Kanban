@@ -7,13 +7,11 @@ import service.TaskManager;
 
 public final class Managers {
 
-    HistoryManager historyManager = new InMemoryHistoryManager();
-
     public static TaskManager getDefault() {
         return new InMemoryTaskManager();
     }
 
     public HistoryManager getDefaultHistory() {
-        return historyManager;
+        return new InMemoryHistoryManager();
     }
 }

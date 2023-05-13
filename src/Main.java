@@ -1,6 +1,7 @@
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import service.HistoryManager;
 import service.TaskManager;
 import utils.Managers;
 
@@ -11,6 +12,8 @@ public class Main {
         Managers managers = new Managers();
 
         TaskManager taskManager = Managers.getDefault();
+
+        HistoryManager historyManager = managers.getDefaultHistory();
 
         Task task1 = new Task("отдохнуть", "набраться сил перед программированием");
         taskManager.createNewTask(task1);
@@ -37,7 +40,7 @@ public class Main {
         managers.getDefaultHistory().add(taskManager.getTask(1));
         managers.getDefaultHistory().add(taskManager.getTask(2));
         managers.getDefaultHistory().add(taskManager.getEpic(3));
-        System.out.println(managers.getDefaultHistory().getHistory());
+        System.out.println(historyManager.getHistory());
         managers.getDefaultHistory().add(taskManager.getSubtask(4));
         managers.getDefaultHistory().add(taskManager.getSubtask(5));
         managers.getDefaultHistory().add(taskManager.getEpic(6));
@@ -46,7 +49,7 @@ public class Main {
         managers.getDefaultHistory().add(taskManager.getTask(2));
         managers.getDefaultHistory().add(taskManager.getEpic(3));
         managers.getDefaultHistory().add(taskManager.getSubtask(4));
-        System.out.println(managers.getDefaultHistory().getHistory());
+        System.out.println(historyManager.getHistory());
         taskManager.updateTask(task1);
         taskManager.updateEpic(epic2);
         taskManager.updateSubtask(epic1Subtask2);

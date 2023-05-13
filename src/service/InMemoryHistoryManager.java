@@ -9,9 +9,12 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     private final List<Task> taskHistory = new LinkedList<>();
 
+    private static final int MAX_HISTORY_SIZE = 10;
+
+
     @Override
     public void add(Task task) {
-        if (taskHistory.size() < 10) {
+        if (taskHistory.size() < MAX_HISTORY_SIZE) {
             taskHistory.add(task);
         } else {
             taskHistory.remove(0);
