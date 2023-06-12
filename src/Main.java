@@ -30,26 +30,25 @@ public class Main {
         Subtask epic1Subtask2 = new Subtask(3, "проверить ошибки", "добавить задачи и исправить оишбки");
         taskManager.createNewSubtask(epic1, epic1Subtask2);
 
+        Subtask epic1Subtask3 = new Subtask(3, "загрузить на GitHub", "загрузить через bash");
+        taskManager.createNewSubtask(epic1, epic1Subtask3);
+
         Epic epic2 = new Epic("отправить на проверку", "если работа готова");
         taskManager.createNewEpic(epic2);
 
-        Subtask epic2Subtask1 = new Subtask(6, "загрузить на GitHub", "загрузить через bash");
-        taskManager.createNewSubtask(epic2, epic2Subtask1);
-
-        Managers.getDefault().getList();
-        managers.getDefaultHistory().add(taskManager.getTask(1));
-        managers.getDefaultHistory().add(taskManager.getTask(2));
-        managers.getDefaultHistory().add(taskManager.getEpic(3));
+        historyManager.add(taskManager.getTask(1));
+        historyManager.add(taskManager.getTask(2));
+        historyManager.add(taskManager.getEpic(3));
         System.out.println(historyManager.getHistory());
-        managers.getDefaultHistory().add(taskManager.getSubtask(4));
-        managers.getDefaultHistory().add(taskManager.getSubtask(5));
-        managers.getDefaultHistory().add(taskManager.getEpic(6));
-        managers.getDefaultHistory().add(taskManager.getSubtask(7));
-        managers.getDefaultHistory().add(taskManager.getTask(1));
-        managers.getDefaultHistory().add(taskManager.getTask(2));
-        managers.getDefaultHistory().add(taskManager.getEpic(3));
-        managers.getDefaultHistory().add(taskManager.getSubtask(4));
+        historyManager.add(taskManager.getSubtask(4));
+        historyManager.add(taskManager.getSubtask(5));
+        historyManager.add(taskManager.getSubtask(6));
+        historyManager.add(taskManager.getEpic(7));
+        historyManager.add(taskManager.getTask(1));
+        historyManager.add(taskManager.getTask(2));
+        historyManager.add(taskManager.getEpic(3));
         System.out.println(historyManager.getHistory());
+        taskManager.getList();
         taskManager.updateTask(task1);
         taskManager.updateEpic(epic2);
         taskManager.updateSubtask(epic1Subtask2);
