@@ -4,6 +4,7 @@ import model.Epic;
 import model.Subtask;
 import model.Task;
 import model.TaskStatus;
+import utils.Managers;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,6 +17,10 @@ public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, ArrayList<Subtask>> subtasksInEpic = new HashMap<>();
     private final ArrayList<Subtask> subtaskArrayList = new ArrayList<>();
     private final HashMap<Integer, Subtask> subtasks = new HashMap<>();
+
+    Managers managers = new Managers();
+
+    HistoryManager historyManager = managers.getDefaultHistory();
 
     public int id = 1;
 
@@ -131,6 +136,7 @@ public class InMemoryTaskManager implements TaskManager {
                 if (number == id) {
                     foundTask = tasks.get(id);
                     System.out.println("Идентификатор " + number + " - задача: " + foundTask.getName() + ".");
+                    historyManager.add(foundTask);
                     break;
                 }
             }
@@ -148,6 +154,7 @@ public class InMemoryTaskManager implements TaskManager {
                 if (number == id) {
                     foundEpic = epics.get(id);
                     System.out.println("Идентификатор " + number + " - эпик: " + foundEpic.getName() + ".");
+                    historyManager.add(foundEpic);
                     break;
                 }
             }
@@ -165,6 +172,7 @@ public class InMemoryTaskManager implements TaskManager {
                 if (number == id) {
                     foundSubtask = subtasks.get(id);
                     System.out.println("Идентификатор " + number + " - подзадача: " + foundSubtask.getName() + ".");
+                    historyManager.add(foundSubtask);
                     break;
                 }
             }
@@ -176,22 +184,37 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public void updateTask(Task task) {
-        tasks.put(task.getId(), task);
-        System.out.println("Задача " + task.getName() + " обновлена.");
+        if (tasks.containsValue(task)) {
+            tasks.put(task.getId(), task);
+            System.out.println("Задача " + task.getName() + " обновлена.");
+        }
+        else {
+            System.out.println("Такой задачи не найдено.");
+        }
     }
 
     @Override
     public void updateEpic(Epic epic) {
-        epics.put(epic.getId(), epic);
-        System.out.println("Эпик " + epic.getName() + " обновлен.");
+        if (epics.containsValue(epic)) {
+            epics.put(epic.getId(), epic);
+            System.out.println("Эпик " + epic.getName() + " обновлен.");
+        }
+        else {
+            System.out.println("Такой задачи не найдено.");
+        }
     }
 
     @Override
     public void updateSubtask(Subtask subtask) {
-        subtasks.put(subtask.getId(), subtask);
-        System.out.println("Подзадача " + subtask.getName() + " обновлена.");
-        Epic currentEpic = getEpicOfSubtask(subtask);
-        updateEpicStatus(currentEpic);
+        if (subtasks.containsValue(subtask)) {
+            subtasks.put(subtask.getId(), subtask);
+            System.out.println("Подзадача " + subtask.getName() + " обновлена.");
+            Epic currentEpic = getEpicOfSubtask(subtask);
+            updateEpicStatus(currentEpic);
+        }
+        else {
+            System.out.println("Такой задачи не найдено.");
+        }
     }
 
     @Override
@@ -226,15 +249,20 @@ public class InMemoryTaskManager implements TaskManager {
                     Task foundTask = tasks.get(id);
                     System.out.println("Задача " + foundTask.getName() + " удалена.");
                     tasks.remove(id);
+                    historyManager.remove(id);
                     break;
                 }
             }
             for (Integer id : epics.keySet()) {
                 if (idInput == id) {
                     Epic foundEpic = epics.get(id);
-                    System.out.println("Задача " + foundEpic.getName() + " удалена.");
+                    System.out.println("Задача " + foundEpic.getName() + " и ее подзадачи удалены.");
                     epics.remove(id);
                     subtasksInEpic.remove(id);
+                    historyManager.remove(id);
+                    for (Integer integer : subtasks.keySet()) {
+                        historyManager.remove(integer);
+                    }
                     break;
                 }
             }
@@ -246,6 +274,7 @@ public class InMemoryTaskManager implements TaskManager {
                     Epic currentEpic = getEpicOfSubtask(foundSubtask);
                     updateEpicStatus(currentEpic);
                     subtaskArrayList.removeIf(subtask -> subtask.getId() == idInput);
+                    historyManager.remove(id);
                     break;
                 }
             }
@@ -282,6 +311,11 @@ public class InMemoryTaskManager implements TaskManager {
             }
         }
         return foundEpic;
+    }
+
+    @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
     }
 
 }
