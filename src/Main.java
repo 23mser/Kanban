@@ -1,7 +1,6 @@
 import model.Epic;
 import model.Subtask;
 import model.Task;
-import service.HistoryManager;
 import service.TaskManager;
 import utils.Managers;
 
@@ -9,11 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        Managers managers = new Managers();
-
         TaskManager taskManager = Managers.getDefault();
-
-        HistoryManager historyManager = managers.getDefaultHistory();
 
         Task task1 = new Task("отдохнуть", "набраться сил перед программированием");
         taskManager.createNewTask(task1);
@@ -36,19 +31,23 @@ public class Main {
         Epic epic2 = new Epic("отправить на проверку", "если работа готова");
         taskManager.createNewEpic(epic2);
 
-        historyManager.add(taskManager.getTask(1));
-        historyManager.add(taskManager.getTask(2));
-        historyManager.add(taskManager.getEpic(3));
-        System.out.println(historyManager.getHistory());
-        historyManager.add(taskManager.getSubtask(4));
-        historyManager.add(taskManager.getSubtask(5));
-        historyManager.add(taskManager.getSubtask(6));
-        historyManager.add(taskManager.getEpic(7));
-        historyManager.add(taskManager.getTask(1));
-        historyManager.add(taskManager.getTask(2));
-        historyManager.add(taskManager.getEpic(3));
-        System.out.println(historyManager.getHistory());
         taskManager.getList();
+        taskManager.getTask(1);
+        taskManager.getTask(2);
+        taskManager.getEpic(3);
+        taskManager.getHistory();
+        taskManager.getSubtask(4);
+        taskManager.getSubtask(5);
+        taskManager.getSubtask(6);
+        taskManager.getEpic(7);
+        taskManager.getTask(1);
+        taskManager.getTask(2);
+        taskManager.getEpic(3);
+        taskManager.getHistory();
+        taskManager.deleteById(1);
+        taskManager.getHistory();
+        taskManager.deleteById(3);
+        taskManager.getHistory();
         taskManager.updateTask(task1);
         taskManager.updateEpic(epic2);
         taskManager.updateSubtask(epic1Subtask2);

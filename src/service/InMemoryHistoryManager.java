@@ -43,21 +43,18 @@ public class InMemoryHistoryManager implements HistoryManager {
     void removeNode(Node<Task> taskNode) {
         Node<Task> prevNode = taskNode.prev;
         Node<Task> nextNode = taskNode.next;
-
         if (prevNode == null) {
             head = nextNode;
         } else {
             prevNode.next = nextNode;
             taskNode.prev = null;
         }
-
         if (nextNode == null) {
             tail = prevNode;
         } else {
             nextNode.prev = prevNode;
             taskNode.next = null;
         }
-
         taskNode.task = null;
         size--;
     }
@@ -76,7 +73,6 @@ public class InMemoryHistoryManager implements HistoryManager {
     @Override
     public void remove(int id) {
         if (taskHistoryNodes.containsKey(id)) {
-            getTasks().remove(id);
             removeNode(taskHistoryNodes.get(id));
             taskHistoryNodes.remove(id);
         }
@@ -84,7 +80,10 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public List<Task> getHistory() {
-
+        System.out.println("История просмотров:");
+        for (Task task : getTasks()) {
+            System.out.println(task.getName());
+        }
         return getTasks();
     }
 }
