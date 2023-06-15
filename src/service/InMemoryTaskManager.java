@@ -314,8 +314,11 @@ public class InMemoryTaskManager implements TaskManager {
     }
 
     @Override
-    public List<Task> getHistory() {
-        return historyManager.getHistory();
+    public void getHistory() {
+        Task[] taskArray = historyManager.getHistory().toArray(new Task[0]);
+        for (Task task : taskArray) {
+            System.out.println(task.getName());
+        }
     }
 
 }
