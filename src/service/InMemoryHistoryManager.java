@@ -61,12 +61,17 @@ public class InMemoryHistoryManager implements HistoryManager {
 
     @Override
     public void add(Task task) {
-        if (taskHistoryNodes.containsKey(task.getId())) {
-            remove(task.getId());
-            linkLast(task);
+        if (!(task == null)) {
+            if (taskHistoryNodes.containsKey(task.getId())) {
+                remove(task.getId());
+                linkLast(task);
+            }
+            else {
+                linkLast(task);
+            }
         }
         else {
-            linkLast(task);
+            System.out.println("Не удалось добавить задачу.");
         }
     }
 
