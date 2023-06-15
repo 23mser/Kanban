@@ -50,6 +50,6 @@ public interface TaskManager {
 
     Epic getEpicOfSubtask(Subtask subtask);
 
-    List<Task> getHistory();
+    void getHistory();
 
 }
