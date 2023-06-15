@@ -9,11 +9,11 @@ import java.util.List;
 
 public class InMemoryHistoryManager implements HistoryManager {
 
-    HashMap<Integer, Node<Task>> taskHistoryNodes = new HashMap<>();
+    private final HashMap<Integer, Node<Task>> taskHistoryNodes = new HashMap<>();
 
-    Node<Task> head;
-    Node<Task> tail;
-    int size = 0;
+    private Node<Task> head;
+    private Node<Task> tail;
+    protected int size;
 
     void linkLast(Task task) {
         Node<Task> oldTail = tail;
