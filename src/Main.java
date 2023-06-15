@@ -45,10 +45,11 @@ public class Main {
         taskManager.deleteById(1);
         taskManager.getHistory();
         taskManager.deleteById(3);
+        taskManager.getHistory();
         System.out.println(taskManager.getTask(2));
         System.out.println(taskManager.getEpic(7));
         System.out.println(taskManager.getSubtask(5));
-        System.out.println(taskManager.getHistory());
+        taskManager.getHistory();
         taskManager.updateTask(task1);
         taskManager.updateEpic(epic2);
         taskManager.updateSubtask(epic1Subtask2);
