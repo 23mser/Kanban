@@ -2,11 +2,12 @@ import model.Epic;
 import model.Subtask;
 import model.Task;
 import service.TaskManager;
+import utils.ManagerSaveException;
 import utils.Managers;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ManagerSaveException {
 
         TaskManager taskManager = Managers.getDefault();
 
