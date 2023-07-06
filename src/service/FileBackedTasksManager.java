@@ -45,7 +45,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
 
     public static FileBackedTasksManager loadFromFile(File file) throws IOException, ManagerSaveException {
         FileBackedTasksManager fileBacked = new FileBackedTasksManager(file);
-        List<String> list = Files.readAllLines(Path.of("FileBackedTasksManager.csv"), StandardCharsets.UTF_8);
+        List<String> list = Files.readAllLines(file.toPath());
         for (int i = 1; i < list.size() - 1; i++) {
             if (list.get(i).isBlank()) {
                 break;
