@@ -51,14 +51,12 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 break;
             }
             Task taskFromFile = fromString(list.get(i));
-            if (taskFromFile != null) {
-                if (taskFromFile.getClass().equals(Task.class)) {
-                    fileBacked.createNewTask(taskFromFile);
-                } else if (taskFromFile.getClass().equals(Epic.class)) {
-                    fileBacked.createNewEpic((Epic) taskFromFile);
-                } else if (taskFromFile.getClass().equals(Subtask.class)) {
-                    fileBacked.createNewSubtask(fileBacked.findEpic(((Subtask) taskFromFile).epicId), (Subtask) taskFromFile);
-                }
+            if (taskFromFile.getClass().equals(Task.class)) {
+                fileBacked.createNewTask(taskFromFile);
+            } else if (taskFromFile.getClass().equals(Epic.class)) {
+                fileBacked.createNewEpic((Epic) taskFromFile);
+            } else if (taskFromFile.getClass().equals(Subtask.class)) {
+                fileBacked.createNewSubtask(fileBacked.findEpic(((Subtask) taskFromFile).epicId), (Subtask) taskFromFile);
             }
         }
         List<Integer> historyId = historyFromString(list.get(list.size() - 1));
