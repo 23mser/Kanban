@@ -75,16 +75,18 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
     }
 
     private static Task fromString(String value) {
-        String[] data = value.split(",");
-        switch (data[1]) {
-            case "TASK":
-                return new Task(data[2], data[4]);
-            case "SUBTASK":
-                return new Subtask(Integer.parseInt(data[5]), data[2], data[4]);
-            case "EPIC":
-                return new Epic(data[2], data[4]);
+        if (value != null) {
+            String[] data = value.split(",");
+            switch (data[1]) {
+                case "TASK":
+                    return new Task(data[2], data[4]);
+                case "SUBTASK":
+                    return new Subtask(Integer.parseInt(data[5]), data[2], data[4]);
+                case "EPIC":
+                    return new Epic(data[2], data[4]);
+            }
         }
-        return null;
+        return (Task) Collections.emptyList();
     }
 
     private static String historyToString(HistoryManager manager) {
