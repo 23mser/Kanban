@@ -144,7 +144,7 @@ public class FileBackedTasksManager extends InMemoryTaskManager {
                 fileWriter.append("\n");
                 fileWriter.write(historyToString(historyManager));
             } catch (IOException e) {
-                throw new ManagerSaveException();
+                throw new ManagerSaveException(e.getMessage());
             }
         }
     }
