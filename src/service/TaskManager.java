@@ -3,20 +3,21 @@ package service;
 import model.Epic;
 import model.Subtask;
 import model.Task;
+import model.TaskStatus;
 import utils.ManagerSaveException;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 public interface TaskManager {
 
-    void createNewTask(Task task) throws ManagerSaveException;
+    Task createNewTask(Task task) throws ManagerSaveException;
 
     Epic createNewEpic(Epic epic) throws ManagerSaveException;
 
-    void createNewSubtask(Epic epic, Subtask subtask) throws ManagerSaveException;
-
-    void getList();
+    Subtask createNewSubtask(Epic epic, Subtask subtask) throws ManagerSaveException;
 
     HashMap<Integer, Task> getAllTasks();
 
@@ -48,10 +49,13 @@ public interface TaskManager {
 
     void deleteById(int idInput);
 
-    void getSubtasksOfEpic(Epic epic);
+    ArrayList<Subtask> getSubtasksOfEpic(Epic epic);
 
     Epic getEpicOfSubtask(int subtaskId);
 
     List<Task> getHistory();
 
+    void setStatus(Task task, TaskStatus taskStatus);
+
+    Set<Task> getPrioritizedTasks();
 }
