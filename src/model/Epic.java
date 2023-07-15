@@ -1,17 +1,105 @@
 package model;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class Epic extends Task {
-    protected ArrayList<Integer> subtaskIds = new ArrayList<>();
+    protected ArrayList<Subtask> subtasks = new ArrayList<>();
 
     public Epic(String name, String description) {
-        super(name, description);
+        super(name, description, "01.01.3000 00:00", 0);
     }
 
-    public void addSubtaskId(Subtask subtask) {
-        subtaskIds.add(subtask.getId());
+    @Override
+    public LocalDateTime getStartTime() {
+        if (subtasks.isEmpty()) {
+            return DEFAULT_START;
+        }
+        else if (subtasks.size() == 1) {
+            return subtasks.get(0).getStartTime();
+        }
+        subtasks.sort((s1, s2) -> {
+            if (s1.getStartTime().isAfter(s2.getStartTime())) {
+                return 1;
+            } else if (s1.getStartTime().isBefore(s2.getStartTime())) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        int i = 0;
+        while (subtasks.get(i).getStartTime().equals(DEFAULT_START)) {
+            i++;
+            if (i == subtasks.size()) {
+                return subtasks.get(i - 1).getStartTime();
+            }
+        }
+        return subtasks.get(i).getStartTime();
+    }
+
+    @Override
+    public void setStartTime(String startTime) {
+        super.setStartTime(startTime);
+    }
+
+    @Override
+    public Duration getDuration() {
+        Duration duration = Duration.ofMinutes(0);
+        for (Subtask subtask : subtasks) {
+            duration = duration.plus(subtask.getDuration());
+        }
+        return duration;
+    }
+
+    @Override
+    public void setDuration(int duration) {
+        super.setDuration(duration);
+    }
+
+    @Override
+    public LocalDateTime getEndTime() {
+        if (subtasks.isEmpty()) {
+            return startTime;
+        } else if (subtasks.size() == 1) {
+            return subtasks.get(0).getEndTime();
+        }
+        subtasks.sort((s1, s2) -> {
+            if (s1.getStartTime().isAfter(s2.getStartTime())) {
+                return 1;
+            } else if (s1.getStartTime().isBefore(s2.getStartTime())) {
+                return -1;
+            } else {
+                return 0;
+            }
+        });
+        int i = subtasks.size()-1;
+        while (subtasks.get(i).getEndTime().equals(startTime)) {
+            i--;
+            if (i == -1) {
+                return subtasks.get(0).getStartTime();
+            }
+        }
+        return subtasks.get(i).getEndTime();
+    }
+
+    public void addSubtask(Subtask subtask) {
+        subtasks.add(subtask);
+    }
+
+    public ArrayList<Subtask> getSubtasks() {
+        return subtasks;
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription();
     }
 
     @Override
