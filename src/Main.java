@@ -5,34 +5,38 @@ import service.TaskManager;
 import utils.ManagerSaveException;
 import utils.Managers;
 
+import java.util.Set;
+
 public class Main {
 
     public static void main(String[] args) throws ManagerSaveException {
 
         TaskManager taskManager = Managers.getDefault();
 
-        Task task1 = new Task("отдохнуть", "набраться сил перед программированием");
-        taskManager.createNewTask(task1);
+        Task task1 = taskManager.createNewTask(new Task("отдохнуть", "набраться сил перед программированием",
+                "21.01.2000 12:00", 10));
 
-        Task task2 = new Task("покормить кота", "насыпать корм в миску");
-        taskManager.createNewTask(task2);
+        taskManager.createNewTask(new Task("покормить кота", "насыпать корм в миску",
+                "22.01.2000 12:00", 5));
 
-        Epic epic1 = new Epic("сделать ТЗ № 3", "реализовать менеджер задач");
-        taskManager.createNewEpic(epic1);
+        Epic epic1 = taskManager.createNewEpic(new Epic("сделать ТЗ № 3", "реализовать менеджер задач"));
 
-        Subtask epic1Subtask1 = new Subtask(3, "написать код", "реализовать логику работы программы");
-        taskManager.createNewSubtask(epic1, epic1Subtask1);
+        taskManager.createNewSubtask(epic1, new Subtask("написать код", "реализовать логику работы программы",
+                "02.01.2000 12:00", 10, epic1.getId()));
 
-        Subtask epic1Subtask2 = new Subtask(3, "проверить ошибки", "добавить задачи и исправить оишбки");
-        taskManager.createNewSubtask(epic1, epic1Subtask2);
+        Subtask epic1Subtask2 = taskManager.createNewSubtask(epic1, new Subtask("проверить ошибки",
+                "добавить задачи и исправить оишбки", "18.01.2000 12:00", 10, epic1.getId()));
 
-        Subtask epic1Subtask3 = new Subtask(3, "загрузить на GitHub", "загрузить через bash");
-        taskManager.createNewSubtask(epic1, epic1Subtask3);
+        taskManager.createNewSubtask(epic1, new Subtask("загрузить на GitHub",
+                "загрузить через bash", "18.01.2000 12:00", 10, epic1.getId()));
 
-        Epic epic2 = new Epic("отправить на проверку", "если работа готова");
-        taskManager.createNewEpic(epic2);
+        Epic epic2 = taskManager.createNewEpic(new Epic("отправить на проверку", "если работа готова"));
 
-        taskManager.getList();
+        Set<Task> prioritizedTasks = taskManager.getPrioritizedTasks();
+        for (Task prioritizedTask : prioritizedTasks) {
+            System.out.println(prioritizedTask.getName());
+        }
+
         taskManager.getTask(1);
         taskManager.getEpic(3);
         taskManager.getHistory();
@@ -42,14 +46,6 @@ public class Main {
         taskManager.getTask(1);
         taskManager.getTask(2);
         taskManager.getEpic(3);
-        taskManager.getHistory();
-        taskManager.deleteById(1);
-        taskManager.getHistory();
-        taskManager.deleteById(3);
-        taskManager.getHistory();
-        System.out.println(taskManager.getTask(2));
-        System.out.println(taskManager.getEpic(7));
-        System.out.println(taskManager.getSubtask(5));
         taskManager.getHistory();
         taskManager.updateTask(task1);
         taskManager.updateEpic(epic2);
