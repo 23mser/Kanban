@@ -5,9 +5,24 @@ import java.util.Objects;
 public class Subtask extends Task {
     public int epicId;
 
-    public Subtask(int epicId, String name, String description) {
-        super(name, description);
+    public Subtask(String name, String description, String startTime, int duration, int epicId) {
+        super(name, description, startTime, duration);
         this.epicId = epicId;
+    }
+
+    @Override
+    public String getName() {
+        return super.getName();
+    }
+
+    @Override
+    public String getDescription() {
+        return super.getDescription();
+    }
+
+    @Override
+    public TaskStatus getStatus() {
+        return super.getStatus();
     }
 
     @Override
