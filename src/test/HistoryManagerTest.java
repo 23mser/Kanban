@@ -24,7 +24,7 @@ class HistoryManagerTest {
     Subtask subtask;
 
     @BeforeEach
-    void start() throws ManagerSaveException {
+    void beforeEach() throws ManagerSaveException {
         historyManager = new InMemoryHistoryManager();
         taskManager = new InMemoryTaskManager();
         task = taskManager.createNewTask(new Task("tn", "td", "12.01.2000 12:00", 10));
@@ -45,8 +45,13 @@ class HistoryManagerTest {
         historyManager.add(subtask);
         assertEquals(3, historyManager.getHistory().size());
         assertEquals(subtask, historyManager.getHistory().get(2));
+        List<Task> history1 = historyManager.getHistory();
+        Task task1 = history1.get(0);
         historyManager.add(task);
         assertEquals(3, historyManager.getHistory().size());
+        List<Task> history2 = historyManager.getHistory();
+        Task task2 = history2.get(2);
+        assertEquals(task1, task2);
     }
 
     @Test
@@ -65,8 +70,13 @@ class HistoryManagerTest {
         historyManager.add(subtask);
         assertEquals(3, historyManager.getHistory().size());
         historyManager.remove(3);
+        List<Task> history = historyManager.getHistory();
+        assertEquals(task, history.get(0));
+        assertEquals(epic, history.get(1));
         assertEquals(2, historyManager.getHistory().size());
         historyManager.remove(1);
+        history = historyManager.getHistory();
+        assertEquals(epic, history.get(0));
         assertEquals(1, historyManager.getHistory().size());
     }
 
