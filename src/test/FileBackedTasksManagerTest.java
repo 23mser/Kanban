@@ -52,10 +52,11 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
 
         taskManager.getEpic(epic.getId());
         taskManager.save();
-        taskManager = FileBackedTasksManager.loadFromFile(fileToSave);
+        taskManager.deleteAllEpics();
+        FileBackedTasksManager taskManager1 = FileBackedTasksManager.loadFromFile(fileToSave);
 
-        assertEquals(1, taskManager.getAllEpics().size());
-        assertEquals(1, taskManager.getHistory().size());
+        assertEquals(1, taskManager1.getAllEpics().size());
+        assertEquals(1, taskManager1.getHistory().size());
     }
 
     @Test
@@ -65,9 +66,9 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
 
         assertEquals(0, taskManager.getHistory().size());
 
-        taskManager = FileBackedTasksManager.loadFromFile(fileToSave);
+        FileBackedTasksManager taskManager1 = FileBackedTasksManager.loadFromFile(fileToSave);
 
-        assertEquals(0, taskManager.getHistory().size());
+        assertEquals(0, taskManager1.getHistory().size());
     }
 
     @Test
@@ -76,11 +77,11 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         assertEquals(0, taskManager.getAllEpics().size());
         assertEquals(0, taskManager.getAllSubtasks().size());
 
-        taskManager = FileBackedTasksManager.loadFromFile(fileToSave);
+        FileBackedTasksManager taskManager1 = FileBackedTasksManager.loadFromFile(fileToSave);
 
-        assertEquals(0, taskManager.getAllTasks().size());
-        assertEquals(0, taskManager.getAllEpics().size());
-        assertEquals(0, taskManager.getAllSubtasks().size());
+        assertEquals(0, taskManager1.getAllTasks().size());
+        assertEquals(0, taskManager1.getAllEpics().size());
+        assertEquals(0, taskManager1.getAllSubtasks().size());
     }
 
     @Test
@@ -92,19 +93,19 @@ class FileBackedTasksManagerTest extends TaskManagerTest<FileBackedTasksManager>
         taskManager.getEpic(epic.getId());
         taskManager.save();
         taskManager.deleteAllEpics();
-        taskManager = FileBackedTasksManager.loadFromFile(fileToSave);
+        FileBackedTasksManager taskManager1 = FileBackedTasksManager.loadFromFile(fileToSave);
 
-        assertEquals(1, taskManager.getAllEpics().size());
-        assertEquals(1, taskManager.getHistory().size());
+        assertEquals(1, taskManager1.getAllEpics().size());
+        assertEquals(1, taskManager1.getHistory().size());
     }
 
     @Test
     public void loadWhenHistoryIsEmpty() throws ManagerSaveException, IOException {
         assertEquals(0, taskManager.getHistory().size());
 
-        taskManager = FileBackedTasksManager.loadFromFile(fileToSave);
+        FileBackedTasksManager taskManager1 = FileBackedTasksManager.loadFromFile(fileToSave);
 
-        assertEquals(0, taskManager.getHistory().size());
+        assertEquals(0, taskManager1.getHistory().size());
     }
 
 }
