@@ -16,16 +16,19 @@ import java.util.*;
 
 public class FileBackedTasksManager extends InMemoryTaskManager {
 
-    private final File saveFile;
+    private File saveFile;
 
     public FileBackedTasksManager(File saveFile) {
         this.saveFile = saveFile;
     }
 
+    public FileBackedTasksManager() {
+    }
+
     public static void main(String[] args) throws ManagerSaveException, IOException {
         FileBackedTasksManager fileBacked = Managers.getFile(new File("FileBackedTasksManager.csv"));
         fileBacked.createNewTask(new Task("Task1", "D Task1", "01.01.2000 12:00", 10));
-        fileBacked.createNewTask(new Task("Task2", "D Task2", "01.01.2000 12:00", 15));
+        fileBacked.createNewTask(new Task("Task2", "D Task2", "02.01.2000 12:00", 15));
         fileBacked.createNewTask(new Task("Task3", "D Task3", "03.01.2000 12:00", 20));
         Epic epic1 = fileBacked.createNewEpic(new Epic("Epic1", "D Epic1"));
         fileBacked.createNewEpic(new Epic("Epic2", "D Epic2"));

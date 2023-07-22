@@ -58,4 +58,5 @@ public interface TaskManager {
     void setStatus(Task task, TaskStatus taskStatus);
 
     Set<Task> getPrioritizedTasks();
+    void deleteSubtasksOfEpic(Epic epic);
 }

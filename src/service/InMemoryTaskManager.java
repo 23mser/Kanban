@@ -38,6 +38,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Task createNewTask(Task task) throws ManagerSaveException {
+        task.setTaskType(TaskType.TASK);
         task.setStatus(TaskStatus.NEW);
         task.setId(getId());
         tasks.put(task.getId(), task);
@@ -55,6 +56,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Epic createNewEpic(Epic epic) throws ManagerSaveException {
+        epic.setTaskType(TaskType.EPIC);
         epic.setStatus(TaskStatus.NEW);
         epic.setId(getId());
         epics.put(epic.getId(), epic);
@@ -67,6 +69,7 @@ public class InMemoryTaskManager implements TaskManager {
 
     @Override
     public Subtask createNewSubtask(Epic epic, Subtask subtask) throws ManagerSaveException {
+        subtask.setTaskType(TaskType.SUBTASK);
         subtask.setStatus(TaskStatus.NEW);
         subtask.setId(getId());
         subtasks.put(subtask.getId(), subtask);
@@ -350,5 +353,13 @@ public class InMemoryTaskManager implements TaskManager {
     @Override
     public Set<Task> getPrioritizedTasks() {
         return prioritizedTasks;
+    }
+
+    @Override
+    public void deleteSubtasksOfEpic(Epic epic) {
+        List<Subtask> subtaskList = subtasksInEpic.get(epic.getId());
+        for (Subtask subtask : subtaskList) {
+            subtasks.remove(subtask.getId());
+        }
     }
 }

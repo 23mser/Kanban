@@ -13,6 +13,8 @@ public class Task {
     public TaskStatus status;
     public LocalDateTime startTime;
     public Duration duration;
+
+    public TaskType taskType;
     public static final LocalDateTime DEFAULT_START = LocalDate.of(3000, 1, 1).atStartOfDay();
     public static final Duration DEFAULT_DURATION = Duration.ofMinutes(0);
 
@@ -43,6 +45,14 @@ public class Task {
     public Task(String name, String description, String startTime, int duration) {
         this.name = name;
         this.description = description;
+        this.startTime = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
+        this.duration = Duration.ofMinutes(duration);
+    }
+
+    public Task(String name, String description, TaskStatus status, String startTime, int duration) {
+        this.name = name;
+        this.description = description;
+        this.status = status;
         this.startTime = LocalDateTime.parse(startTime, DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm"));
         this.duration = Duration.ofMinutes(duration);
     }
@@ -117,6 +127,10 @@ public class Task {
 
     public LocalDateTime getEndTime() {
         return startTime.plusMinutes(duration.toMinutes());
+    }
+
+    public void setTaskType(TaskType taskType) {
+        this.taskType = taskType;
     }
 
 }

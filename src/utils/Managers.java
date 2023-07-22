@@ -1,13 +1,14 @@
 package utils;
 
+import http.HttpTaskManager;
 import service.*;
 import java.io.File;
 import java.io.IOException;
 
 public final class Managers {
 
-    public static TaskManager getDefault() {
-        return new InMemoryTaskManager();
+    public static HttpTaskManager getDefault() throws IOException, InterruptedException {
+        return new HttpTaskManager();
     }
 
     public HistoryManager getDefaultHistory() {
@@ -20,5 +21,4 @@ public final class Managers {
         }
         return FileBackedTasksManager.loadFromFile(file);
     }
-
 }
