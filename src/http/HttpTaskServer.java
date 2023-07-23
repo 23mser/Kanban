@@ -15,25 +15,26 @@ import java.util.HashMap;
 import java.util.List;
 
 public class HttpTaskServer {
-    public HttpTaskManager fileBacked;
+    private final HttpTaskManager fileBacked;
     private final HttpServer httpServer;
 
     public static void main(String[] args) throws IOException, InterruptedException, ManagerSaveException {
         new KVServer().start();
         HttpTaskServer server = new HttpTaskServer(Managers.getDefault());
         server.start();
-        server.fileBacked.createNewTask(new Task("tn", "td"));
-        Epic epic = server.fileBacked.createNewEpic(new Epic("en", "ed"));
-        server.fileBacked.createNewSubtask(epic,
+        HttpTaskManager manager = server.fileBacked;
+        manager.createNewTask(new Task("tn", "td"));
+        Epic epic = manager.createNewEpic(new Epic("en", "ed"));
+        manager.createNewSubtask(epic,
                 new Subtask("sn", "sd", "01.01.2000 12:00", 10, epic.getId()));
-        server.fileBacked.getTask(1);
-        server.fileBacked.getSubtask(3);
-        server.fileBacked.getEpic(2);
-        server.fileBacked.getAllTasks().clear();
-        server.fileBacked.getAllSubtasks().clear();
-        server.fileBacked.getAllEpics().clear();
-        server.fileBacked.getHistory().clear();
-        server.fileBacked.getPrioritizedTasks().clear();
+        manager.getTask(1);
+        manager.getSubtask(3);
+        manager.getEpic(2);
+        manager.getAllTasks().clear();
+        manager.getAllSubtasks().clear();
+        manager.getAllEpics().clear();
+        manager.getHistory().clear();
+        manager.getPrioritizedTasks().clear();
         server.backup();
     }
 
@@ -103,5 +104,9 @@ public class HttpTaskServer {
                 }
             }
         }
+    }
+
+    public HttpTaskManager getFileBacked() {
+        return fileBacked;
     }
 }

@@ -37,7 +37,7 @@ public class HttpTaskManager extends FileBackedTasksManager {
     }
 
     @Override
-    public void save() {
+    public void save() throws ManagerSaveException {
         try {
             super.save();
             client.put("tasks", gson.toJson(getAllTasks()));
@@ -50,7 +50,7 @@ public class HttpTaskManager extends FileBackedTasksManager {
             }
             client.put("history", gson.toJson(historyId));
         } catch (IOException | InterruptedException | ManagerSaveException e) {
-            e.printStackTrace();
+            throw new ManagerSaveException("Во время обрабоки файла произошла ошибка. Объект не преобразован в JSON.");
         }
     }
 
