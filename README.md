@@ -6,8 +6,6 @@
 
 <div style="text-align: center;">
 
-![](https://github.com/pursecookie/java-kanban/blob/main/src/kanban.jpg)
-
 </div>
 
 ## Что умеет Kanban?
