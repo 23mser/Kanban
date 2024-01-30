@@ -22,6 +22,6 @@
 
 ## Как установить Kanban?
 
-Clone the repository: git clone https://github.com/DevSMike/java-kanban.git
+Clone the repository: git clone https://github.com/23mser/Kanban.git
 Navigate to the project directory: cd note-management-app
 Compile the Java source files: javac *.java
